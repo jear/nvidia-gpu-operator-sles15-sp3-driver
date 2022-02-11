@@ -97,3 +97,27 @@ k apply -f dcgmproftester-mixed.yaml
 k apply -f tf-benchmarks-mixed-3g.yaml
 
 ```
+
+# Phase 4 : Monitor
+```
+sdiff -s kube-prometheus-stack.values.default kube-prometheus-stack.values.jerome 
+    type: ClusterIP					      |	    type: LoadBalancer
+    type: ClusterIP					      |	    type: LoadBalancer
+    serviceMonitorSelectorNilUsesHelmValues: true	      |	    serviceMonitorSelectorNilUsesHelmValues: false
+    additionalScrapeConfigs: []				      |	    additionalScrapeConfigs:
+							      >	    - job_name: gpu-metrics
+							      >	      scrape_interval: 1s
+							      >	      metrics_path: /metrics
+							      >	      scheme: http
+							      >	      kubernetes_sd_configs:
+							      >	      - role: endpoints
+							      >	        namespaces:
+							      >	          names:
+							      >	          - my-gpu-operator
+							      >	      relabel_configs:
+							      >	      - source_labels: [__meta_kubernetes_pod_node_name]
+							      >	        action: replace
+							      >	        target_label: kubernetes_node
+                    
+
+```
