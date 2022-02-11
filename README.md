@@ -13,6 +13,24 @@ docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-args DRIVER_VERSION=${
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
 ```
 
+Patch 
+```
+# Issue: nvidia driver cant compile
+# SLE BCI need access to SLE repo for kernel-default and kernel-default-devel.
+# In RKE2 (contaienrd) pod is not start as root and can't access /etc/SUSEConnect and /etc/zypp/credentials.d/SCCCredentials
+# https://documentation.suse.com/sles/15-SP3/single-html/SLES-container/#sec-customize-prebuild-images
+# Workaround : add bind-mount in the nvidia driver daemonset
+# Issue: nvidia toolkit not ready
+# RKE2 stores containerd socket and config.toml in different directory.
+# RKE2 also doesn't allow direct config.toml change. we have to use a Go Tmpl
+# https://docs.rke2.io/advanced/#configuring-containerd
+# https://thenewstack.io/install-a-nvidia-gpu-operator-on-rke2-kubernetes-cluster/
+# Workaround : change ENV to good path and to config.toml.tmpl
+# toolkit
+# - /run/k3s/containerd/
+# - /var/lib/rancher/rke2/agent/etc/containerd/
+```
+
 # Phase 3: Configure geometry
 ```
 # Choose your geometry
