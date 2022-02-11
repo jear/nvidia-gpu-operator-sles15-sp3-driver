@@ -36,9 +36,28 @@ Patch
 # https://docs.rke2.io/advanced/#configuring-containerd
 # https://thenewstack.io/install-a-nvidia-gpu-operator-on-rke2-kubernetes-cluster/
 # Workaround : change ENV to good path and to config.toml.tmpl
-# toolkit
-# - /run/k3s/containerd/
-# - /var/lib/rancher/rke2/agent/etc/containerd/
+
+# nvidia-container-toolkit-daemonset
+ - /run/k3s/containerd/
+ - /var/lib/rancher/rke2/agent/etc/containerd/
+
+# nvidia-driver-daemonset
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - init
+        command:
+        - nvidia-driver
+        image: jear/driver:470.82.01-sles15.3
+        volumeMounts:
+        - mountPath: /etc/SUSEConnect
+          name: etc-suseconnect
+        - mountPath: /etc/zypp/credentials.d/SCCcredentials
+          name: vol9
+          readOnly: true
+
 ```
 
 # Phase 3: Configure geometry
