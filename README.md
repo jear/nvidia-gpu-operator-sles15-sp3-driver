@@ -1,9 +1,9 @@
 ### Documents
-- [UpstreamAuthority Plugin Documents](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
+- [Gitlab repo](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
 ### Diagram
 
-![vault-upstream-authority-flow](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
+![Gitlab repo](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
 
 # Phase1: Build Driver (don't do that if NVIDIA publish the offical driver
