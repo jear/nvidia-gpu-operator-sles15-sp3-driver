@@ -134,7 +134,7 @@ helm install prometheus-community/kube-prometheus-stack \
    --generate-name \
    --values /tmp/kube-prometheus-stack.values.jerome
 
-# Demos
+# Demo to be checked with MIG 
 helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.tgz && \
    helm install video-analytics-demo-0.1.4.tgz --generate-name
    
