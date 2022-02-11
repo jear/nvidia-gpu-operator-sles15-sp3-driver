@@ -100,6 +100,15 @@ k apply -f tf-benchmarks-mixed-3g.yaml
 
 # Phase 4 : Monitor
 ```
+https://docs.nvidia.com/datacenter/cloud-native/gpu-telemetry/dcgm-exporter.html#integrating-gpu-telemetry-into-kubernetes
+
+helm repo add prometheus-community \
+   https://prometheus-community.github.io/helm-charts
+helm repo update 
+helm search repo kube-prometheus
+helm inspect values prometheus-community/kube-prometheus-stack > kube-prometheus-stack.values.default
+
+
 sdiff -s kube-prometheus-stack.values.default kube-prometheus-stack.values.jerome 
     type: ClusterIP					      |	    type: LoadBalancer
     type: ClusterIP					      |	    type: LoadBalancer
@@ -120,4 +129,13 @@ sdiff -s kube-prometheus-stack.values.default kube-prometheus-stack.values.jerom
 							      >	        target_label: kubernetes_node
                     
 
+helm install prometheus-community/kube-prometheus-stack \
+   --create-namespace --namespace prometheus \
+   --generate-name \
+   --values /tmp/kube-prometheus-stack.values.jerome
+
+# Demos
+helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.tgz && \
+   helm install video-analytics-demo-0.1.4.tgz --generate-name
+   
 ```
