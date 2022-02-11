@@ -7,7 +7,17 @@ cd nvidia-driver/sle15
 export DRIVER_VERSION=470.82.01
 docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-args DRIVER_VERSION=${DRIVER_VERSION} .
 
+# Export to registry or load on local RKE2 nodes
+docker push driver:${DRIVER_VERSION}-sles15.3
+# OR
+docker save driver:${DRIVER_VERSION}-sles15.3 > driver-${DRIVER_VERSION}-sles15.3.tar
+scp xxx.tar rke-node:.
+export PATH=$PATH:/var/lib/rancher/rke2/bin
+ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images import xxx.tar
+ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images tag "import-%{yyyy-MM-dd}" nvcr.io/nvidia/driver:470.82.01-sles15.3
 ```
+
+
 # Phase 2: Deploy gpu-operator
 ```
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
