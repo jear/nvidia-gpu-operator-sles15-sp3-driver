@@ -38,8 +38,14 @@ Patch
 # Workaround : change ENV to good path and to config.toml.tmpl
 
 # nvidia-container-toolkit-daemonset
- - /run/k3s/containerd/
- - /var/lib/rancher/rke2/agent/etc/containerd/
+spec:
+  template:
+    spec:
+      - args:
+        - /usr/local/nvidia
+        env:
+        - name: RUNTIME_ARGS
+          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
 
 # nvidia-driver-daemonset
 spec:
@@ -57,6 +63,16 @@ spec:
         - mountPath: /etc/zypp/credentials.d/SCCcredentials
           name: vol9
           readOnly: true
+      volumes:
+        name: crio-hooks
+      - hostPath:
+          path: /var/lib/rancher/rke2/agent/etc/containerd/
+          type: ""
+        name: containerd-config
+      - hostPath:
+          path: /run/k3s/containerd/
+          type: ""
+        name: containerd-socket
 
 ```
 
