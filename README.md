@@ -16,6 +16,7 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 # Phase 3: Configure geometry
 ```
 # Choose your geometry
+k describe configmaps -n my-gpu-operator default-mig-parted-config
 
 # Apply your geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
@@ -23,10 +24,13 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
 
-
 ```
+
 # Phase 4 : Profit
 
 ```
+k apply -f dcgmproftester-mixed.yaml
+
+k apply -f tf-benchmarks-mixed-3g.yaml
 
 ```
