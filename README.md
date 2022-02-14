@@ -1,4 +1,4 @@
-### Check regulrly this  Gitlab repo
+### Check regularly this  Gitlab repo
 [Gitlab merge request](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
 
