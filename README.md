@@ -1,9 +1,9 @@
-### Related Gitlab repo
+### Check regulrly this  Gitlab repo
 [Gitlab merge request](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
 
 
-# Phase1: Build Driver (don't do that if NVIDIA publish the offical driver
+# Phase1: Build Driver (don't do that when NVIDIA publish the offical driver)
 ```
 zypper in docker
 systemctl enable docker --now
