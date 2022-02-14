@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dcgmproftester
+  name: dcgmproftester-2g
 spec:
   restartPolicy: OnFailure
   containers:
@@ -10,7 +10,7 @@ spec:
     args: ["--no-dcgm-validation", "-t 1004", "-d 120"]
     resources:
       limits:
-         nvidia.com/mig-3g.20gb: 1
+         nvidia.com/mig-2g.10gb: 1
     securityContext:
       capabilities:
          add: ["SYS_ADMIN"]

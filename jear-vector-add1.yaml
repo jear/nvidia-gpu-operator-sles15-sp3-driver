@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jear-cuda-vectoradd1
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: vectoradd
+    image: nvidia/samples:vectoradd-cuda11.2.1
+    resources:
+      limits:
+        nvidia.com/mig-1g.5gb: 1
+  nodeSelector:
+    nvidia.com/gpu.product: NVIDIA-A100-PCIE-40GB
