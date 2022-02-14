@@ -98,7 +98,9 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite
 # Phase 4 : Profit
 
 ```
-k apply -f dcgmproftester-mixed.yaml
+k apply -f jear-vector-add1.yaml
+
+k apply -f dcgmproftester-mixed-2g.yaml
 
 k apply -f tf-benchmarks-mixed-3g.yaml
 
