@@ -1,5 +1,5 @@
-### Check regularly this  Gitlab merge request
-- [Add support for SLE15](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
+### Check regularly this  Gitlab merge request for SLES15-SP3
+- [gitlab.com/nvidia/container-images/driver](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
 ### Initial issue is here
 - [NVIDIA/gpu-operator/issues/308](https://github.com/NVIDIA/gpu-operator/issues/308)
