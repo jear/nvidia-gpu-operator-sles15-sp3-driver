@@ -95,7 +95,7 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite
 
 ```
 
-# Phase 4 : Profit
+# Phase 4 : Test all-balanced 1g, 2g, 3g
 
 ```
 k apply -f jear-vector-add1.yaml
