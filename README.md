@@ -1,7 +1,7 @@
 ### Check regularly this  Gitlab merge request for SLES15-SP3
 - [gitlab.com/nvidia/container-images/driver](https://gitlab.com/nvidia/container-images/driver/-/merge_requests/163)
 
-### Initial issue is here
+### Initial Github.com issue is here
 - [NVIDIA/gpu-operator/issues/308](https://github.com/NVIDIA/gpu-operator/issues/308)
 
 # Phase1: Build Driver (don't do that when NVIDIA publish the offical driver)
