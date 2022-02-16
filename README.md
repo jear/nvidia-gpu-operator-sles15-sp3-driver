@@ -107,7 +107,7 @@ k apply -f tf-benchmarks-mixed-3g.yaml
 
 ```
 
-# Phase 4 : Monitor
+# Phase 5 : Monitor
 ```
 https://docs.nvidia.com/datacenter/cloud-native/gpu-telemetry/dcgm-exporter.html#integrating-gpu-telemetry-into-kubernetes
 
@@ -148,3 +148,11 @@ helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.
    helm install video-analytics-demo-0.1.4.tgz --generate-name
    
 ```
+
+# Phase 6: uninstall
+```
+helm delete  gpu-operator  -n my-gpu-operator 
+helm delete prometheus -n prometheus
+
+```
+
