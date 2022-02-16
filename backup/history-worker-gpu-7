@@ -1,0 +1,214 @@
+    1  2022-01-17 14:42:26 hostnamectl set-hostname worker-gpu-7
+    3  2022-01-17 14:45:08 zypper se docker
+    4  2022-01-17 14:45:16 zypper in  docker
+    5  2022-01-17 14:47:44 systemctl enable --now docker
+    6  2022-01-17 14:48:04 sysctl -a --system
+    9  2022-01-17 14:48:38 zypper in vim
+   10  2022-01-17 14:49:16 vim /etc/sysctl.d/70-yast.conf
+   11  2022-01-17 14:49:24 sysctl -a --system
+   13  2022-01-17 14:50:13 zypper in sudo
+   14  2022-01-17 14:50:27 sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run  rancher/rancher-agent:v2.6.2 --server https://10.69.0.65 --token 7wql5pr82v6stfhhhkhvnbfhcqdhf8rnfq9wd6vw2hprxbzfl5xp9v --ca-checksum 338ba74e8920fa67028ec16ff2fb3794382ca7b1f525beb6a9f9fcfcb901727a --worker
+   15  2022-01-17 14:51:01 docker ps
+   17  2022-01-17 15:03:52 docker rm -f $(docker ps -qa)
+   18  2022-01-17 15:03:52 docker rmi -f $(docker images -q)
+   19  2022-01-17 15:03:57 docker volume rm $(docker volume ls -q)
+   20  2022-01-17 15:04:06 for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do umount $mount; done
+   22  2022-01-17 15:04:16 ps -edf f
+   23  2022-01-17 15:04:20 docker ps
+   24  2022-01-17 15:05:09 rm -rf /etc/ceph        /etc/cni        /etc/kubernetes        /opt/cni        /opt/rke        /run/secrets/kubernetes.io        /run/calico        /run/flannel        /var/lib/calico        /var/lib/etcd        /var/lib/cni        /var/lib/kubelet        /var/lib/rancher/rke/log        /var/log/containers        /var/log/kube-audit        /var/log/pods        /var/run/calico
+   25  2022-01-17 15:05:34 systemctl restart docker
+   26  2022-01-17 15:06:36 systemctl stop docker
+   27  2022-01-17 15:06:42 systemctl disable docker
+   28  2022-01-17 15:06:58 curl --insecure -fL https://10.69.0.65/system-agent-install.sh | sudo  sh -s - --server https://10.69.0.65 --label 'cattle.io/os=linux' --token z9pnh44vkrmrn5prz4sxfbkxxwt9dwx4lhhm5h2vfk9hd82rphsjjd --ca-checksum 338ba74e8920fa67028ec16ff2fb3794382ca7b1f525beb6a9f9fcfcb901727a --etcd --controlplane --worker
+   29  2022-01-17 15:07:21 journalctl -u rancher-system-agent.service -f
+   44  2022-01-19 12:18:24 vi /etc/sysctl.d/70-yast.conf
+   45  2022-01-19 12:18:45 sysctl -a --system
+   46  2022-01-19 14:06:41 mkdir workspace
+   47  2022-01-19 14:08:35 cd workspace/
+   48  2022-01-19 14:08:41 mkdir gitlab
+   49  2022-01-19 14:08:42 cd gitlab/
+   64  2022-01-21 10:45:04 gcc
+   65  2022-01-21 11:02:11 rke2-uninstall.sh 
+   66  2022-01-21 11:17:41 curl --insecure -fL https://10.69.0.65/system-agent-install.sh | sudo  sh -s - --server https://10.69.0.65 --label 'cattle.io/os=linux' --token ptxth7gjkn2pgtbhmkht7qmvrx5nvjh2gxttbt4d8wk44wnc8hp8w2 --ca-checksum 338ba74e8920fa67028ec16ff2fb3794382ca7b1f525beb6a9f9fcfcb901727a --worker
+   68  2022-01-22 13:14:16 nslookup worker-gpu-1.lysdemolab.fr
+   70  2022-02-07 17:02:06 cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf
+   71  2022-02-07 17:02:21 cat /etc/modprobe.d/50-blacklist.conf
+   74  2022-02-07 17:08:55 cd /etc/containerd/
+   76  2022-02-07 17:11:15 sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+   77  2022-02-07 17:11:22 sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+   78  2022-02-07 17:11:44 lsmod
+   79  2022-02-07 17:11:50 lsmod | grep nouv
+   80  2022-02-07 17:12:55 helm repo add nvidia https://nvidia.github.io/gpu-operator    && helm repo update
+   81  2022-02-07 17:55:23 SUSEConnect -s
+   82  2022-02-07 17:56:24 mkdir workspace
+   83  2022-02-07 17:56:29 cd workspace/
+   85  2022-02-07 17:56:33 cd gitlab/
+   88  2022-02-07 17:57:08 git clone https://gitlab.com/fcrozat/nvidia-driver.git
+   89  2022-02-07 17:57:14 cd nvidia-driver/
+   91  2022-02-07 17:57:17 cd sle15/
+   93  2022-02-07 17:57:24 mkdir drivers
+   96  2022-02-07 17:58:33 systemctl start docker
+   99  2022-02-07 17:59:00 cd workspace/gitlab/nvidia-driver/
+  101  2022-02-07 17:59:09 cd sle15/
+  102  2022-02-07 17:59:11 docker build -t jear/driver:470.82.01-sles15.3  --build-arg DRIVER_VERSION=470.82.01   . 
+  103  2022-02-07 18:01:05 docker login
+  106  2022-02-07 18:01:54 docker push jear/driver:470.82.01-sles15.3
+  107  2022-02-07 18:02:32 cd
+  108  2022-02-07 18:02:46 systemctl stop docker
+  109  2022-02-07 18:03:45 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image ls
+  110  2022-02-07 18:03:58 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image ls  | grep jear
+  111  2022-02-07 18:04:16 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image rm docker.io/jear/driver:470.82.01-sles15.3
+  112  2022-02-07 18:04:20 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image ls  | grep jear
+  113  2022-02-07 18:04:54 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image rm docker.io/jear/driver@sha256:33dc5eaef50c64a8ad066f62988ce712686513d26b27579e38da154dc2c85805
+  114  2022-02-07 18:04:56 /var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io image ls  | grep jear
+  115  2022-02-07 18:12:18 zypper --non-interactive in -y --no-recommends --capability kernel-default = 5.3.18-59.37 kernel-default-devel = 5.3.18-59.37
+  116  2022-02-07 18:17:43 SUSEConnect -s
+  122  2022-02-07 21:39:08 ls /etc/SUSEConnect
+  123  2022-02-07 21:39:13 cat /etc/SUSEConnect
+  124  2022-02-07 21:39:28 cat /etc/zypp/credentials.d/SCCcredentials
+  125  2022-02-07 21:56:46 ls /run/k3s/containerd/
+  126  2022-02-07 22:03:50 ls /r
+  127  2022-02-07 22:03:52 ls /run/
+  128  2022-02-07 22:03:56 ls /run/nvidia
+  129  2022-02-07 22:04:28 ls /run/nvidia/validations/
+  130  2022-02-08 09:42:08 ls /run/nvidia
+  131  2022-02-08 09:42:17 ls /run/nvidia/validations/
+  132  2022-02-08 09:44:52 ls /usr/local/nvidia/
+  133  2022-02-08 09:44:54 ls /usr/local/nvidia/toolkit/
+  134  2022-02-08 09:46:14 ls /run/containers/oci/hooks.d/
+  135  2022-02-08 09:46:28 ls /run/containerd/
+  136  2022-02-08 09:46:31 ls /run/containerd/s/
+  137  2022-02-08 09:46:35 ls /run/containerd/runc/
+  138  2022-02-08 09:46:36 ls /run/containerd/runc/k8s.io/
+  139  2022-02-08 09:46:51 ls /run/containerd/runc/k8s.io/b4fefd80739d60f6bfbc73cae9750ae44ddebb957ad369df30d35d01388ae8f9/
+  140  2022-02-08 09:46:58 ls /etc/containerd/
+  141  2022-02-08 09:47:33 ls -R /etc/
+  142  2022-02-08 09:47:39 ls -R /etc/ | grep hook
+  143  2022-02-08 09:47:47 ls -R /etc/ | grep -i hook
+  144  2022-02-08 09:47:54 ls -R /etc/ | grep -i crio
+  145  2022-02-08 09:47:59 ls -R /etc/ | grep -i cri
+  146  2022-02-08 09:52:15 ls /etc/containerd/config.toml 
+  147  2022-02-08 09:52:21 ls -l /etc/containerd/config.toml 
+  148  2022-02-08 09:52:30 cat /etc/containerd/config.toml 
+  149  2022-02-08 09:54:36 ls -R /var/lib/ | grep -i cont
+  150  2022-02-08 09:54:45 ls -R /var/lib/ | grep -i config
+  151  2022-02-08 09:54:49 ls -R /var/lib/ | grep -i config.toml
+  152  2022-02-08 09:55:00 ls -alR /var/lib/ | grep -i config.toml
+  153  2022-02-08 09:55:07 ls -alRh /var/lib/ | grep -i config.toml
+  154  2022-02-08 09:55:15 ls -aLRh /var/lib/ | grep -i config.toml
+  155  2022-02-08 09:55:22 ls -alRh /var/lib/ | grep -i config.toml
+  156  2022-02-08 09:55:53 find /var/lib/ -iname config.toml
+  157  2022-02-08 09:56:04 cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  158  2022-02-08 10:00:25 ls /run/nvidia/validations/
+  159  2022-02-08 10:06:38 systemctl restart containerd.service 
+  160  2022-02-08 10:06:50 systemctl status containerd.service 
+  161  2022-02-08 10:07:25 ps -edf f |grep containerd
+  162  2022-02-08 10:07:36 systemctl 
+  163  2022-02-08 10:08:11 systemctl stop containerd.service 
+  164  2022-02-08 10:08:34 ps -edf f |grep containerd
+  165  2022-02-08 10:09:19 find /var/lib/ -iname hook
+  166  2022-02-08 10:09:26 find /var/lib/ -iname "hook.d"
+  167  2022-02-08 10:09:31 find /run -iname "hook.d"
+  168  2022-02-08 10:09:42 find /var -iname "hook.d"
+  169  2022-02-08 10:09:46 find /var -iname "hooks.d"
+  170  2022-02-08 10:10:03 find /run/ -iname "hooks.d"
+  171  2022-02-08 10:10:13 ls /run/containers/oci/hooks.d
+  172  2022-02-08 10:15:43 cat /run/nvidia/validations/driver-ready
+  173  2022-02-08 10:16:18 touch /run/nvidia/validations/toolkit-ready
+  174  2022-02-08 10:18:43 ls /run/nvidia/valid
+  175  2022-02-08 10:21:43 cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  176  2022-02-08 10:21:53 ls §l /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  177  2022-02-08 10:21:58 ls -l /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  178  2022-02-08 10:22:34 cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  179  2022-02-08 10:25:29 chmod 666 /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  180  2022-02-08 10:26:05 watch ls -l /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  181  2022-02-08 10:27:45 cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  182  2022-02-08 10:27:49 watch cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  183  2022-02-08 10:29:19 rm /run/nvidia/validations/toolkit-ready 
+  184  2022-02-08 10:29:24 watch cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  185  2022-02-08 10:31:18 watch cat /etc/containerd/config.toml
+  186  2022-02-08 10:32:17 watch cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  187  2022-02-08 10:32:21 watch cat /etc/containerd/config.toml
+  188  2022-02-08 10:32:46 vim /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  189  2022-02-08 10:33:16 watch cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  190  2022-02-08 10:34:44 cat /run/nvidia/validations/
+  191  2022-02-08 10:35:38 watch cat /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+  192  2022-02-08 10:36:05 ps -edf f
+  193  2022-02-08 10:36:35 man kill
+  194  2022-02-08 10:36:40 zypper in man
+  195  2022-02-08 10:37:27 man kill
+  196  2022-02-08 10:38:26 man signal
+  197  2022-02-08 10:38:45 ps -edf f
+  198  2022-02-08 10:39:01 kill -1 26648
+  199  2022-02-08 10:39:40 cd /var/lib/rancher/rke2/
+  200  2022-02-08 10:39:41 ls
+  201  2022-02-08 10:39:44 cd agent/
+  202  2022-02-08 10:39:45 ls
+  203  2022-02-08 10:40:07 cat /etc/rancher/agent/config.yaml
+  204  2022-02-08 10:40:28 cat /etc/rancher/node/password
+  205  2022-02-08 10:40:35 cat /etc/rancher/rke2/config.yaml.d/
+  206  2022-02-08 10:40:37 cat /etc/rancher/rke2/config.yaml.d/50-rancher.yaml
+  207  2022-02-08 10:40:51 cat /etc/rancher/rke2/registries.yaml
+  208  2022-02-08 15:28:48 shutdown  §r now
+  209  2022-02-08 15:28:50 shutdown  -r now
+  210  2022-02-08 15:34:36 docker ps
+  211  2022-02-08 15:40:27 top
+  212  2022-02-08 15:45:57 ls /run/nvidia
+  213  2022-02-08 15:46:06 ls /run/nvidia/validations/
+  214  2022-02-08 15:48:34 zypper ref
+  215  2022-02-08 15:48:43 zypper clean all
+  216  2022-02-08 15:48:47 zypper clean
+  217  2022-02-08 15:48:49 zypper ref
+  218  2022-02-08 15:49:06 zypper --help | grep cach
+  219  2022-02-08 15:49:15 zypper clean
+  220  2022-02-08 15:49:17 zypper ref
+  221  2022-02-08 15:50:07 ping free.fr
+  222  2022-02-08 15:50:20 zypper in net-utils
+  223  2022-02-08 15:50:24 zypper in iputils
+  224  2022-02-08 15:50:29 ping free.fr
+  225  2022-02-08 15:50:43 ping updates.suse.com
+  226  2022-02-08 15:50:48 cat /etc/resolv.conf
+  227  2022-02-08 15:51:58 sysctl --system -a | grep forwa
+  228  2022-02-08 15:52:15 vim /etc/sysctl.d/70-yast.conf 
+  229  2022-02-08 15:52:29 vim /etc/sysctl.conf 
+  230  2022-02-08 15:53:01 vim .vimrc
+  231  2022-02-08 15:53:09 vim /etc/sysctl.conf 
+  232  2022-02-08 15:53:45 sysctl -w net.ipv4.ip_forward=1
+  233  2022-02-08 15:56:32 top
+  234  2022-02-08 15:59:04 sysctl --system -a | grep forwa
+  235  2022-02-08 16:21:26 ping updates.suse.com
+  236  2022-02-08 16:26:21 iptables-save 
+  237  2022-02-08 16:28:42 aa-e
+  238  2022-02-08 16:28:46 aa-enabled 
+  239  2022-02-08 16:32:50 shutdown -r now
+  240  2022-02-08 16:11:08 lspci -vvvv
+  241  2022-02-08 16:11:10 lspci -vvv
+  242  2022-02-08 16:11:15 zy in
+  243  2022-02-08 16:11:23 zypper install lspci
+  244  2022-02-08 16:11:37 zypper search lspci
+  245  2022-02-08 16:12:04 lshw
+  246  2022-02-08 16:17:35 cat /etc/selinux/semanage.conf
+  247  2022-02-08 16:19:41 semanage boolean -l
+  248  2022-02-08 16:20:26 getenforce
+  249  2022-02-08 16:20:31 sestatus
+  250  2022-02-08 16:21:47 cat /sys/fs/selinux/enforce
+  251  2022-02-08 16:22:18 ls -Z
+  252  2022-02-08 16:22:56 sudo semanage fcontext -l
+  253  2022-02-08 16:42:34 zypper -n install open-iscsi 
+  254  2022-02-08 16:46:14 systemctl restart iscsi iscsid 
+  255  2022-02-08 16:46:20 systemctl status iscsi iscsid 
+  256  2022-02-09 14:29:31 history 
+  257  2022-02-09 18:08:28 ll /etc/docker/
+  258  2022-02-09 18:08:32 ll /etc/docker/certs.d/
+  259  2022-02-09 18:08:45 ll /etc/docker/certs.d/harbor.infra01.lysdemolab.fr/
+  260  2022-02-09 18:08:53 cat /etc/docker/certs.d/harbor.infra01.lysdemolab.fr/ca.crt
+  261  2022-02-15 17:44:42 ls
+  262  2022-02-15 17:44:45 cd workspace/
+  263  2022-02-15 17:44:46 ll
+  264  2022-02-15 17:44:47 cd gitlab/
+  265  2022-02-15 17:44:49 ll
+  266  2022-02-15 17:44:54 cd nvidia-driver/
+  267  2022-02-15 17:44:57 git pull
+  268  2022-02-15 17:45:06 cd sle15/
+  269  2022-02-15 17:45:14 history 
+  270  2022-02-15 17:46:10 history > history-worker-gpu-7
