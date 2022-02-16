@@ -151,6 +151,12 @@ helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.
 
 # Phase 6: uninstall
 ```
+
+k delete -f jear-vector-add1-1g.yaml
+k delete -f jear-vector-add2-1g.yaml
+k delete -f dcgmproftester-mixed-2g.yaml
+k delete -f tf-benchmarks-mixed-3g.yaml
+
 helm delete  gpu-operator  -n my-gpu-operator 
 helm delete prometheus -n prometheus
 
