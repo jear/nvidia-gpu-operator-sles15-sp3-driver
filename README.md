@@ -100,8 +100,8 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite
 ```
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
 
-k apply -f jear-vector-add1.yaml
-k apply -f jear-vector-add2.yaml
+k apply -f jear-vector-add1-1g.yaml
+k apply -f jear-vector-add2-1g.yaml
 k apply -f dcgmproftester-mixed-2g.yaml
 k apply -f tf-benchmarks-mixed-3g.yaml
 
