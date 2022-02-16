@@ -98,10 +98,11 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite
 # Phase 4 : Test all-balanced 1g, 2g, 3g
 
 ```
+kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
+
 k apply -f jear-vector-add1.yaml
-
+k apply -f jear-vector-add2.yaml
 k apply -f dcgmproftester-mixed-2g.yaml
-
 k apply -f tf-benchmarks-mixed-3g.yaml
 
 ```
