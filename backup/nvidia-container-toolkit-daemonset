@@ -1,0 +1,161 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "6"
+    nvidia.com/last-applied-hash: 842eb87da2342243
+    openshift.io/scc: hostmount-anyuid
+  creationTimestamp: "2022-02-07T16:15:39Z"
+  generation: 6
+  labels:
+    app: nvidia-container-toolkit-daemonset
+  name: nvidia-container-toolkit-daemonset
+  namespace: my-gpu-operator
+  ownerReferences:
+  - apiVersion: nvidia.com/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ClusterPolicy
+    name: cluster-policy
+    uid: 9805a1b4-0dc7-4aed-839f-b566a918b715
+  resourceVersion: "7470217"
+  uid: 4f3a101a-9382-4fab-80d4-7123b4e42454
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nvidia-container-toolkit-daemonset
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nvidia-container-toolkit-daemonset
+    spec:
+      affinity: {}
+      containers:
+      - args:
+        - /usr/local/nvidia
+        env:
+        - name: RUNTIME_ARGS
+          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
+        - name: NVIDIA_DRIVER_ROOT
+          value: /run/nvidia/driver
+        - name: RUNTIME
+          value: containerd
+        - name: CONTAINERD_RUNTIME_CLASS
+          value: nvidia
+        - name: CONTAINERD_SET_AS_DEFAULT
+          value: "true"
+        image: nvcr.io/nvidia/k8s/container-toolkit:1.7.2-ubuntu18.04
+        imagePullPolicy: IfNotPresent
+        name: nvidia-container-toolkit-ctr
+        resources: {}
+        securityContext:
+          privileged: true
+          seLinuxOptions:
+            level: s0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: Bidirectional
+          name: nvidia-run-path
+        - mountPath: /usr/local/nvidia
+          name: nvidia-local
+        - mountPath: /usr/share/containers/oci/hooks.d
+          name: crio-hooks
+        - mountPath: /runtime/config-dir/
+          name: containerd-config
+        - mountPath: /runtime/sock-dir/
+          name: containerd-socket
+      dnsPolicy: ClusterFirst
+      hostPID: true
+      initContainers:
+      - args:
+        - nvidia-validator
+        command:
+        - sh
+        - -c
+        env:
+        - name: WITH_WAIT
+          value: "true"
+        - name: COMPONENT
+          value: driver
+        image: nvcr.io/nvidia/cloud-native/gpu-operator-validator:v1.9.1
+        imagePullPolicy: IfNotPresent
+        name: driver-validation
+        resources: {}
+        securityContext:
+          privileged: true
+          seLinuxOptions:
+            level: s0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/nvidia/driver
+          mountPropagation: HostToContainer
+          name: driver-install-path
+        - mountPath: /run/nvidia/validations
+          mountPropagation: Bidirectional
+          name: run-nvidia-validations
+      nodeSelector:
+        nvidia.com/gpu.deploy.container-toolkit: "true"
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: nvidia-container-toolkit
+      serviceAccountName: nvidia-container-toolkit
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /run/nvidia/validations
+          type: DirectoryOrCreate
+        name: run-nvidia-validations
+      - hostPath:
+          path: /run/nvidia/driver
+          type: ""
+        name: driver-install-path
+      - hostPath:
+          path: /run/nvidia
+          type: DirectoryOrCreate
+        name: nvidia-run-path
+      - hostPath:
+          path: /usr/local/nvidia
+          type: ""
+        name: nvidia-local
+      - hostPath:
+          path: /run/containers/oci/hooks.d
+          type: ""
+        name: crio-hooks
+      - hostPath:
+          path: /var/lib/rancher/rke2/agent/etc/containerd/
+          type: ""
+        name: containerd-config
+      - hostPath:
+          path: /run/k3s/containerd/
+          type: ""
+        name: containerd-socket
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 1
+  desiredNumberScheduled: 1
+  numberAvailable: 1
+  numberMisscheduled: 0
+  numberReady: 1
+  observedGeneration: 6
+  updatedNumberScheduled: 1
+                                                                                                               159,1         Bot
+

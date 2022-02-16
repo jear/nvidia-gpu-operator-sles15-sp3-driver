@@ -1,0 +1,125 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "1"
+    nvidia.com/last-applied-hash: 342d256fe902dd52
+    openshift.io/scc: hostmount-anyuid
+  creationTimestamp: "2022-02-07T16:15:39Z"
+  generation: 1
+  labels:
+    app: nvidia-device-plugin-daemonset
+  name: nvidia-device-plugin-daemonset
+  namespace: my-gpu-operator
+  ownerReferences:
+  - apiVersion: nvidia.com/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ClusterPolicy
+    name: cluster-policy
+    uid: 9805a1b4-0dc7-4aed-839f-b566a918b715
+  resourceVersion: "8943218"
+  uid: 2b922da9-c6ac-4182-9cab-1cb92ada2529
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nvidia-device-plugin-daemonset
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nvidia-device-plugin-daemonset
+    spec:
+      containers:
+      - env:
+        - name: PASS_DEVICE_SPECS
+          value: "true"
+        - name: FAIL_ON_INIT_ERROR
+          value: "true"
+        - name: DEVICE_LIST_STRATEGY
+          value: envvar
+        - name: DEVICE_ID_STRATEGY
+          value: uuid
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: all
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: all
+        - name: NVIDIA_DRIVER_ROOT
+          value: /run/nvidia/driver
+        - name: MIG_STRATEGY
+          value: mixed
+        - name: NVIDIA_MIG_MONITOR_DEVICES
+          value: all
+        image: nvcr.io/nvidia/k8s-device-plugin:v0.10.0-ubi8
+        imagePullPolicy: IfNotPresent
+        name: nvidia-device-plugin-ctr
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/kubelet/device-plugins
+          name: device-plugin
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - until [ -f /run/nvidia/validations/toolkit-ready ]; do echo waiting for
+          nvidia container stack to be setup; sleep 5; done
+        command:
+        - sh
+        - -c
+        image: nvcr.io/nvidia/cloud-native/gpu-operator-validator:v1.9.1
+        imagePullPolicy: IfNotPresent
+        name: toolkit-validation
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: HostToContainer
+          name: run-nvidia
+      nodeSelector:
+        nvidia.com/gpu.deploy.device-plugin: "true"
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      runtimeClassName: nvidia
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: nvidia-device-plugin
+      serviceAccountName: nvidia-device-plugin
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /var/lib/kubelet/device-plugins
+          type: ""
+        name: device-plugin
+      - hostPath:
+          path: /run/nvidia
+          type: Directory
+        name: run-nvidia
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 1
+  desiredNumberScheduled: 1
+  numberAvailable: 1
+  numberMisscheduled: 0
+  numberReady: 1
+  observedGeneration: 1
+  updatedNumberScheduled: 1
+

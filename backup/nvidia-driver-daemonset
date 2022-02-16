@@ -1,0 +1,185 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "4"
+    nvidia.com/last-applied-hash: 6f671467bc7fde77
+    openshift.io/scc: nvidia-driver
+  creationTimestamp: "2022-02-07T16:15:39Z"
+  generation: 4
+  labels:
+    app: nvidia-driver-daemonset
+  name: nvidia-driver-daemonset
+  namespace: my-gpu-operator
+  ownerReferences:
+  - apiVersion: nvidia.com/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ClusterPolicy
+    name: cluster-policy
+    uid: 9805a1b4-0dc7-4aed-839f-b566a918b715
+  resourceVersion: "7470046"
+  uid: f235b517-9f48-4902-988f-74c75e7ca697
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nvidia-driver-daemonset
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nvidia-driver-daemonset
+    spec:
+      affinity: {}
+      containers:
+      - args:
+        - init
+        command:
+        - nvidia-driver
+        image: jear/driver:470.82.01-sles15.3
+        imagePullPolicy: IfNotPresent
+        name: nvidia-driver-ctr
+        resources: {}
+        securityContext:
+          privileged: true
+          seLinuxOptions:
+            level: s0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: Bidirectional
+          name: run-nvidia
+        - mountPath: /run/nvidia-topologyd
+          name: run-nvidia-topologyd
+        - mountPath: /var/log
+          name: var-log
+        - mountPath: /dev/log
+          name: dev-log
+        - mountPath: /host-etc/os-release
+          name: host-os-release
+          readOnly: true
+        - mountPath: /run/mellanox/drivers/usr/src
+          mountPropagation: HostToContainer
+          name: mlnx-ofed-usr-src
+        - mountPath: /run/mellanox/drivers
+          mountPropagation: HostToContainer
+          name: run-mellanox-drivers
+        - mountPath: /etc/SUSEConnect
+          name: etc-suseconnect
+        - mountPath: /etc/zypp/credentials.d/SCCcredentials
+          name: vol9
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      hostPID: true
+      initContainers:
+      - args:
+        - uninstall_driver
+        command:
+        - driver-manager
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: void
+        - name: ENABLE_AUTO_DRAIN
+          value: "true"
+        - name: DRAIN_USE_FORCE
+          value: "false"
+        - name: DRAIN_POD_SELECTOR_LABEL
+        - name: DRAIN_TIMEOUT_SECONDS
+          value: 0s
+        - name: DRAIN_DELETE_EMPTYDIR_DATA
+          value: "false"
+        - name: OPERATOR_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.2.0
+        imagePullPolicy: IfNotPresent
+        name: k8s-driver-manager
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: Bidirectional
+          name: run-nvidia
+      nodeSelector:
+        nvidia.com/gpu.deploy.driver: "true"
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: nvidia-driver
+      serviceAccountName: nvidia-driver
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /run/nvidia/validations
+          type: DirectoryOrCreate
+        name: run-nvidia-validations
+      - hostPath:
+          path: /run/nvidia
+          type: DirectoryOrCreate
+        name: run-nvidia
+      - hostPath:
+          path: /var/log
+          type: ""
+        name: var-log
+      - hostPath:
+          path: /dev/log
+          type: ""
+        name: dev-log
+      - hostPath:
+          path: /etc/os-release
+          type: ""
+        name: host-os-release
+      - hostPath:
+          path: /run/nvidia-topologyd
+          type: DirectoryOrCreate
+        name: run-nvidia-topologyd
+      - hostPath:
+          path: /run/mellanox/drivers/usr/src
+          type: DirectoryOrCreate
+        name: mlnx-ofed-usr-src
+      - hostPath:
+          path: /run/mellanox/drivers
+          type: DirectoryOrCreate
+        name: run-mellanox-drivers
+      - hostPath:
+          path: /etc/SUSEConnect
+          type: ""
+        name: etc-suseconnect
+      - hostPath:
+          path: /etc/zypp/credentials.d/SCCcredentials
+          type: ""
+        name: vol9
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 1
+  desiredNumberScheduled: 1
+  numberAvailable: 1
+  numberMisscheduled: 0
+  numberReady: 1
+  observedGeneration: 4
+  updatedNumberScheduled: 1
