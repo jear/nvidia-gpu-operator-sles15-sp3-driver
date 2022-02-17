@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: tf-benchmarks-mixeda-3g
+  name: tf-benchmarks-mixed-3g
 spec:
   restartPolicy: Never
   containers:

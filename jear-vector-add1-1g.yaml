@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: jear-cuda-vectoradd1
+  name: jear-cuda-vectoradd1-1g
 spec:
   restartPolicy: OnFailure
   containers:
