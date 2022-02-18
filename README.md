@@ -83,6 +83,9 @@ spec:
 ```
 
 # Phase 3: Configure geometry
+
+Examples here : https://github.com/NVIDIA/mig-parted/blob/master/examples/config.yaml
+
 ```
 # Choose your geometry
 k describe configmaps -n my-gpu-operator default-mig-parted-config
