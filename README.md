@@ -11,7 +11,8 @@ systemctl enable docker --now
 git clone https://gitlab.com/fcrozat/nvidia-driver
 cd nvidia-driver/sle15
 export DRIVER_VERSION=470.82.01
-docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-args DRIVER_VERSION=${DRIVER_VERSION} .
+docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-arg DRIVER_VERSION=${DRIVER_VERSION} .
+
 
 # Export to registry or load on local RKE2 nodes
 docker push driver:${DRIVER_VERSION}-sles15.3
