@@ -15,7 +15,7 @@ docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-arg DRIVER_VERSION=${D
 
 
 # Export to registry or load on local RKE2 nodes
-docker tag river:${DRIVER_VERSION}-sles15.3 jear/driver:${DRIVER_VERSION}-sles15.3
+docker tag driver:${DRIVER_VERSION}-sles15.3 jear/driver:${DRIVER_VERSION}-sles15.3
 docker push jear/driver:${DRIVER_VERSION}-sles15.3
 # OR
 docker save driver:${DRIVER_VERSION}-sles15.3 > driver-${DRIVER_VERSION}-sles15.3.tar
