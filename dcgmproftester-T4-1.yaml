@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dcgmproftester-t4
+  name: dcgmproftester-t4-1
 spec:
   restartPolicy: OnFailure
   containers:

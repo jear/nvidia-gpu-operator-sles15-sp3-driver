@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dcgmproftester-t4
+  name: dcgmproftester-t4-dcgm
 spec:
   restartPolicy: OnFailure
   containers:
   - name: dcgmproftester11
     image: nvidia/samples:dcgmproftester-2.0.10-cuda11.0-ubuntu18.04
-    args: ["--no-dcgm-validation", "-t 1004", "-d 240"]
+    args: ["-t 1004", "-d 240"]
     resources:
       limits:
-         nvidia.com/gpu: 1
+         nvidia.com/gpu: 3
     securityContext:
       capabilities:
          add: ["SYS_ADMIN"]
