@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dcgmproftester-m6
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: dcgmproftester11
+    image: nvidia/samples:dcgmproftester-2.0.10-cuda11.0-ubuntu18.04
+    args: ["--no-dcgm-validation", "-t 1004", "-d 120"]
+    resources:
+      limits:
+         nvidia.com/gpu: 1
+    securityContext:
+      capabilities:
+         add: ["SYS_ADMIN"]
+  nodeSelector:  #optional
+    nvidia.com/gpu.product: Tesla-M6
+
+
