@@ -102,6 +102,16 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite
 # Apply your geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-1g.5gb --overwrite  
 
+# in single mode
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "7",
+
+# in mixed mode
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "1",
+  "nvidia.com/mig-1g.5gb.count": "7",
+
+
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
 
