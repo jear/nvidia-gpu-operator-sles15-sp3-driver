@@ -7,7 +7,7 @@ spec:
   containers:
   - name: dcgmproftester11
     image: nvidia/samples:dcgmproftester-2.0.10-cuda11.0-ubuntu18.04
-    args: ["--no-dcgm-validation", "-t 1004", "-d 120"]
+    args: ["--no-dcgm-validation", "-t 1001", "-d 120"]
     resources:
       limits:
          nvidia.com/gpu: 1
