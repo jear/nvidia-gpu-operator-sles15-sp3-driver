@@ -32,7 +32,7 @@ ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images tag "import-%{yyyy-M
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
 
 # Single MIG strategy
-helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
+helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single
 ```
 
 Patch 
@@ -98,6 +98,9 @@ k describe configmaps -n my-gpu-operator default-mig-parted-config
 
 # Apply your geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
+
+# Apply your geometry
+kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-1g.5gb --overwrite  
 
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
