@@ -15,7 +15,7 @@ kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite
 ```
 
 
-# Test 2: Configure geometry in mixed and single strategy
+# Test 2: While in Single mode, try to apply a mixed geometry -> should fail
 
 Examples here : https://github.com/NVIDIA/mig-parted/blob/master/examples/config.yaml
 
@@ -26,12 +26,17 @@ k describe configmaps -n my-gpu-operator default-mig-parted-config
 # Apply your geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
 
-# Apply your geometry
+--> fail -> OK
+
+# back to a consistent geometry/strategy
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-1g.5gb --overwrite  
 
 # in single mode
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
   "nvidia.com/gpu.count": "7",
+
+
+
 
 # in mixed mode
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
