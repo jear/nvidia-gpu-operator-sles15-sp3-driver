@@ -2,6 +2,8 @@
 ```
 # Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
+  "nvidia.com/mig.strategy": "mixed",
 
 # Single MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single --wait
@@ -11,6 +13,8 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
 
 # Back in Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
+  "nvidia.com/mig.strategy": "mixed",
 
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
@@ -26,7 +30,7 @@ Examples here : https://github.com/NVIDIA/mig-parted/blob/master/examples/config
 # Choose your geometry
 k describe configmaps -n my-gpu-operator default-mig-parted-config
 
-# Apply your geometry
+# in single strategy, try to apply a mixed-geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
 
 --> fail -> OK
@@ -39,13 +43,20 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
   "nvidia.com/gpu.count": "7",
 
 
+# Back in Mixed MIG strategy
+helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
+  "nvidia.com/mig.strategy": "mixed",
+
+# in mixed strategy, try to apply a mixed-geometry and single strategy
+kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
+kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-1g.5gb --overwrite  
 
 
-# in mixed mode
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
-  "nvidia.com/gpu.count": "1",
-  "nvidia.com/mig-1g.5gb.count": "7",
 
+
+-->  OK
 
 
 ```
