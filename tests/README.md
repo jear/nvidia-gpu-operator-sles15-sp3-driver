@@ -5,6 +5,9 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 
 # Single MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single --wait
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
+  "nvidia.com/mig.strategy": "single",
+
 
 # Back in Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
