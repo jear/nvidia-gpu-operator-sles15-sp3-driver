@@ -37,11 +37,12 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 
 Patch 
 ```
-# Issue: nvidia driver cant compile
+# Issue: nvidia driver can't compile
 # SLE BCI need access to SLE repo for kernel-default and kernel-default-devel.
 # In RKE2 (contaienrd) pod is not start as root and can't access /etc/SUSEConnect and /etc/zypp/credentials.d/SCCCredentials
 # https://documentation.suse.com/sles/15-SP3/single-html/SLES-container/#sec-customize-prebuild-images
 # Workaround : add bind-mount in the nvidia driver daemonset
+
 # Issue: nvidia toolkit not ready
 # RKE2 stores containerd socket and config.toml in different directory.
 # RKE2 also doesn't allow direct config.toml change. we have to use a Go Tmpl
