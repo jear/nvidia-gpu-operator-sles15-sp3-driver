@@ -1,4 +1,4 @@
-# Test 1: change MIG strategy and disabling MIG mode
+# Test 1: change MIG strategy 
 ```
 # Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
@@ -18,7 +18,7 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
 
 ```
 
-# Test 1: disabling MIG mode and back in MIG enabled ( single or mixed )
+# Test 2: disabling MIG mode and back in MIG enabled ( single or mixed )
 
 ```
 # Disable MIG mode and get 1 GPU
@@ -63,7 +63,7 @@ node/worker-gpu-7 labeled
 ```
 
 
-# Test 2: While in Single mode, try to apply a mixed geometry -> should fail
+# Test 3: While in Single mode, try to apply a mixed geometry -> should fail
 
 Examples here : https://github.com/NVIDIA/mig-parted/blob/master/examples/config.yaml
 
@@ -102,15 +102,15 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
 
 ```
 
-# Test 3 : Workload Test in mixed mode (all-balanced 1g, 2g, 3g)
+# Test 4 : Workload Tests in mixed mode (all-balanced 1g, 2g, 3g)
 
 ```
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
 
-k apply -f jear-vector-add1-1g.yaml && \
-k apply -f jear-vector-add2-1g.yaml && \
-k apply -f dcgmproftester-mixed-2g.yaml && \
-k apply -f tf-benchmarks-mixed-3g.yaml
+k apply -f vector-add/jear-vector-add1-1g.yaml && \
+k apply -f vector-add/jear-vector-add2-1g.yaml && \
+k apply -f dcgmproftester/dcgmproftester-mixed-2g.yaml && \
+k apply -f tf-benchmarks/tf-benchmarks-mixed-3g.yaml
 
 ```
 
