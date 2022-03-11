@@ -58,6 +58,11 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
 node/worker-gpu-7 labeled
 
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "1",
+  "nvidia.com/mig-1g.5gb.count": "2",
+  "nvidia.com/mig-2g.10gb.count": "1",
+  "nvidia.com/mig-3g.20gb.count": "1",
 
 
 ```
