@@ -16,8 +16,49 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
   "nvidia.com/mig.strategy": "mixed",
 
+```
+
+# Test 1: disabling MIG mode and back in MIG enabled ( single or mixed )
+
+```
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "1",
+
+k exec -n my-gpu-operator nvidia-mig-manager-kjm7h -- nvidia-smi
+Defaulted container "nvidia-mig-manager" out of: nvidia-mig-manager, toolkit-validation (init)
+Fri Mar 11 12:53:49 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.82.01    Driver Version: 470.82.01    CUDA Version: N/A      |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A100-PCI...  On   | 00000000:61:00.0 Off |                    0 |
+| N/A   66C    P0    44W / 250W |      0MiB / 40536MiB |      0%      Default |
+|                               |                      |             Disabled |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+
+# Back in Mixed MIG strategy
+# check what strategy is already defined
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
+  "nvidia.com/mig.strategy": "mixed",
+
+kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
+node/worker-gpu-7 labeled
+
+
 
 ```
 
