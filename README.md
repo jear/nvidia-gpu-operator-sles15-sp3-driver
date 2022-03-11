@@ -96,17 +96,14 @@ Examples here : https://github.com/NVIDIA/mig-parted/blob/master/examples/config
 # Choose your geometry
 k describe configmaps -n my-gpu-operator default-mig-parted-config
 
-# Apply your geometry
-kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-balanced --overwrite  
-
-# Apply your geometry
+# Apply a geometry
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-1g.5gb --overwrite  
 
-# in single mode
+# if you are in single mode
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
   "nvidia.com/gpu.count": "7",
 
-# in mixed mode
+# if you are in mixed mode
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
   "nvidia.com/gpu.count": "1",
   "nvidia.com/mig-1g.5gb.count": "7",
@@ -114,6 +111,9 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
 
 # Disable MIG mode and get 1 GPU
 kubectl label nodes worker-gpu-7 nvidia.com/mig.config=all-disabled --overwrite  
+
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "1",
 
 ```
 
