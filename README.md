@@ -182,11 +182,10 @@ wget https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<release-tag>/deplo
 kubectl apply -f nvidia.com_clusterpolicies_crd.yaml
 helm show values nvidia/gpu-operator --version=1.8.x > values-1.8.x.yaml
 helm upgrade gpu-operator -n gpu-operator -f values-1.8.x.yaml
-
+```
 
 # Phase 7: uninstall
 ```
-
 k delete -f vector-add/jear-vector-add1-1g.yaml && \
 k delete -f vector-add/jear-vector-add2-1g.yaml && \
 k delete -f dcgmproftester/dcgmproftester-mixed-2g.yaml && \
@@ -194,8 +193,8 @@ k delete -f tf-benchmarks/tf-benchmarks-mixed-3g.yaml
 
 helm delete prometheus -n prometheus
 helm delete  gpu-operator  -n my-gpu-operator 
+```
 
 - [nvidia GPU Operator Uninstall](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#uninstall)
 
-```
 
