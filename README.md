@@ -177,7 +177,11 @@ It’s expected that during “helm upgrade”, helm doesn’t update the CRD to
 
 
 Since Helm doesn’t support auto upgrade of existing CRDs, the user needs to follow a two step process to upgrade the GPU Operator chart.
-
+```
+wget https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<release-tag>/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
+kubectl apply -f nvidia.com_clusterpolicies_crd.yaml
+helm show values nvidia/gpu-operator --version=1.8.x > values-1.8.x.yaml
+helm upgrade gpu-operator -n gpu-operator -f values-1.8.x.yaml
 
 
 # Phase 7: uninstall
@@ -190,6 +194,8 @@ k delete -f tf-benchmarks/tf-benchmarks-mixed-3g.yaml
 
 helm delete prometheus -n prometheus
 helm delete  gpu-operator  -n my-gpu-operator 
+
+- [nvidia GPU Operator Uninstall](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#uninstall)
 
 ```
 
