@@ -171,8 +171,15 @@ helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.
    helm install video-analytics-demo-0.1.4.tgz --generate-name
    
 ```
+# Phase 6: Upgrade
+It’s expected that during “helm upgrade”, helm doesn’t update the CRD to latest version automatically. Here are the steps to upgrade using helm:
+- [nvidia GPU Operator Upgrade](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#upgrade)
 
-# Phase 6: uninstall
+
+If you just want to change the “mig.strategy” without intention to upgrade operator, you can always edit clusterpolicy to change it using “kubectl edit clusterpolicy”, operator will apply that change.
+
+
+# Phase 7: uninstall
 ```
 
 k delete -f vector-add/jear-vector-add1-1g.yaml && \
