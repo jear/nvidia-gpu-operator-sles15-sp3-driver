@@ -190,7 +190,8 @@ kubectl apply -f nvidia.com_clusterpolicies_crd.yaml
 
 # Step 2
 helm show values nvidia/gpu-operator --version=1.10.0 > values-1.10.0.yaml
-helm upgrade gpu-operator -n gpu-operator -f values-1.10.0.yaml
+helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator -f values-1.10.0.yaml 
+
 ```
 
 # Phase 7: uninstall
