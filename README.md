@@ -176,7 +176,8 @@ It’s expected that during “helm upgrade”, helm doesn’t update the CRD to
 - [nvidia GPU Operator Upgrade](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#upgrade)
 
 
-If you just want to change the “mig.strategy” without intention to upgrade operator, you can always edit clusterpolicy to change it using “kubectl edit clusterpolicy”, operator will apply that change.
+Since Helm doesn’t support auto upgrade of existing CRDs, the user needs to follow a two step process to upgrade the GPU Operator chart.
+
 
 
 # Phase 7: uninstall
