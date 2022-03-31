@@ -1,5 +1,8 @@
 # Test 1: change MIG strategy 
 If you just want to change the “mig.strategy” without intention to upgrade operator, you can always edit clusterpolicy to change it using “kubectl edit clusterpolicy”, operator will apply that change.
+```
+kubectl edit clusterpolicy
+```
 
 
 # Test 2: disabling MIG mode and back in MIG enabled ( single or mixed )
