@@ -182,10 +182,14 @@ It’s expected that during “helm upgrade”, helm doesn’t update the CRD to
 
 Since Helm doesn’t support auto upgrade of existing CRDs, the user needs to follow a two step process to upgrade the GPU Operator chart.
 ```
-wget https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<release-tag>/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
+# wget https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<release-tag>/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
+wget https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/v1.10.0/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
+
 kubectl apply -f nvidia.com_clusterpolicies_crd.yaml
-helm show values nvidia/gpu-operator --version=1.8.x > values-1.8.x.yaml
-helm upgrade gpu-operator -n gpu-operator -f values-1.8.x.yaml
+
+helm show values nvidia/gpu-operator --version=1.10.0 > values-1.10.0.yaml
+helm upgrade gpu-operator -n gpu-operator -f values-1.10.0.yaml
+
 ```
 
 # Phase 7: uninstall
