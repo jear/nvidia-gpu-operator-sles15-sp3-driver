@@ -4,9 +4,9 @@
 ### Initial Github.com issue is here
 - [NVIDIA/gpu-operator/issues/308](https://github.com/NVIDIA/gpu-operator/issues/308)
 
-
+### Source
 - [nvidia operator on Gitlab](https://gitlab.com/nvidia/kubernetes/gpu-operator/)
-- [vidia operator on Github](https://github.com/NVIDIA/gpu-operator/)
+- [nvidia operator on Github](https://github.com/NVIDIA/gpu-operator/)
 
 # Phase1: Build Driver (don't do that when NVIDIA publish the offical driver)
 ```
