@@ -2,6 +2,10 @@
 If you just want to change the “mig.strategy” without intention to upgrade operator, you can always edit clusterpolicy to change it using “kubectl edit clusterpolicy”, operator will apply that change.
 ```
 kubectl edit clusterpolicy
+...
+  mig:
+    strategy: mixed
+...
 ```
 
 
@@ -77,7 +81,12 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
 
 
 # Back in Mixed MIG strategy
-helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
+kubectl edit clusterpolicy
+...
+  mig:
+    strategy: mixed
+...
+
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
   "nvidia.com/mig.strategy": "mixed",
 
