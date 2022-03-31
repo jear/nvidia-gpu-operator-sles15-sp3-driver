@@ -1,22 +1,6 @@
 # Test 1: change MIG strategy 
-```
-# Mixed MIG strategy
-helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
-kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
-  "nvidia.com/mig.strategy": "mixed",
+If you just want to change the “mig.strategy” without intention to upgrade operator, you can always edit clusterpolicy to change it using “kubectl edit clusterpolicy”, operator will apply that change.
 
-# Single MIG strategy
-helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single --wait
-kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
-  "nvidia.com/mig.strategy": "single",
-
-
-# Back in Mixed MIG strategy
-helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed --wait
-kubectl get node -o json | jq '.items[].metadata.labels' | grep -i strategy
-  "nvidia.com/mig.strategy": "mixed",
-
-```
 
 # Test 2: disabling MIG mode and back in MIG enabled ( single or mixed )
 
