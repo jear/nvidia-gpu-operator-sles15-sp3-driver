@@ -64,6 +64,11 @@ spec:
         - name: RUNTIME_ARGS
           value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
 ...
+        - mountPath: /runtime/config-dir/
+          name: containerd-config
+        - mountPath: /runtime/sock-dir/
+          name: containerd-socket
+...
       - hostPath:
           path: /var/lib/rancher/rke2/agent/etc/containerd/
           type: ""
@@ -83,12 +88,14 @@ spec:
         command:
         - nvidia-driver
         image: jear/driver:470.82.01-sles15.3
+...
         volumeMounts:
         - mountPath: /etc/SUSEConnect
           name: etc-suseconnect
         - mountPath: /etc/zypp/credentials.d/SCCcredentials
           name: vol9
           readOnly: true
+...
       volumes:
       - hostPath:
           path: /etc/SUSEConnect
