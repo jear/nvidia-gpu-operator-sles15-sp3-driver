@@ -90,15 +90,14 @@ spec:
           name: vol9
           readOnly: true
       volumes:
-        name: crio-hooks
       - hostPath:
-          path: /etc/SUSEConnect
+          path: /var/lib/rancher/rke2/agent/etc/containerd/
           type: ""
-        name: etc-suseconnect
+        name: containerd-config
       - hostPath:
-          path: /etc/zypp/credentials.d/SCCcredentials
+          path: /run/k3s/containerd/
           type: ""
-        name: vol9
+        name: containerd-socket
       - hostPath:
           path: /etc/SUSEConnect
           type: ""
