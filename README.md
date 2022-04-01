@@ -63,6 +63,15 @@ spec:
         env:
         - name: RUNTIME_ARGS
           value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
+...
+      - hostPath:
+          path: /var/lib/rancher/rke2/agent/etc/containerd/
+          type: ""
+        name: containerd-config
+      - hostPath:
+          path: /run/k3s/containerd/
+          type: ""
+        name: containerd-socket
 
 # nvidia-driver-daemonset
 spec:
