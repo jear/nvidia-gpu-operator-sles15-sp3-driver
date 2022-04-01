@@ -185,6 +185,13 @@ helm fetch https://helm.ngc.nvidia.com/nvidia/charts/video-analytics-demo-0.1.4.
    
 ```
 # Phase 6: Upgrade
+
+First be sure you have pushed the version of the driver corresponding 
+So go back to Phase 1 and :
+export DRIVER_VERSION=510.47.03
+docker build -t driver:${DRIVER_VERSION}-sles15.3 --build-arg DRIVER_VERSION=${DRIVER_VERSION} .
+
+
 It’s expected that during “helm upgrade”, helm doesn’t update the CRD to latest version automatically. Here are the steps to upgrade using helm:
 - [nvidia GPU Operator Upgrade](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#upgrade)
 
