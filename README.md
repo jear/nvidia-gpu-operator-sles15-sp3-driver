@@ -92,13 +92,13 @@ spec:
       volumes:
         name: crio-hooks
       - hostPath:
-          path: /var/lib/rancher/rke2/agent/etc/containerd/
+          path: /etc/SUSEConnect
           type: ""
-        name: containerd-config
+        name: etc-suseconnect
       - hostPath:
-          path: /run/k3s/containerd/
+          path: /etc/zypp/credentials.d/SCCcredentials
           type: ""
-        name: containerd-socket
+        name: vol9
 
 ```
 
