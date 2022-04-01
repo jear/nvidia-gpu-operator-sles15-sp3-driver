@@ -91,14 +91,6 @@ spec:
           readOnly: true
       volumes:
       - hostPath:
-          path: /var/lib/rancher/rke2/agent/etc/containerd/
-          type: ""
-        name: containerd-config
-      - hostPath:
-          path: /run/k3s/containerd/
-          type: ""
-        name: containerd-socket
-      - hostPath:
           path: /etc/SUSEConnect
           type: ""
         name: etc-suseconnect
