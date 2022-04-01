@@ -99,6 +99,14 @@ spec:
           path: /etc/zypp/credentials.d/SCCcredentials
           type: ""
         name: vol9
+      - hostPath:
+          path: /etc/SUSEConnect
+          type: ""
+        name: etc-suseconnect
+      - hostPath:
+          path: /etc/zypp/credentials.d/SCCcredentials
+          type: ""
+        name: vol9
 
 ```
 
