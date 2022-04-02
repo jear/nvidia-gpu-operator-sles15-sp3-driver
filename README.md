@@ -8,7 +8,8 @@
 - [nvidia operator on Gitlab](https://gitlab.com/nvidia/kubernetes/gpu-operator/)
 - [nvidia operator on Github](https://github.com/NVIDIA/gpu-operator/)
 
-# Phase1: Build Driver ( only needed if NVIDIA has not published in the offical driver registry )
+# Phase1: Build Driver ( only needed if NVIDIA has not published in the offical driver registry
+- [NGC nvidia driver image registry](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/driver/tags) )
 ```
 zypper in docker
 systemctl enable docker --now
