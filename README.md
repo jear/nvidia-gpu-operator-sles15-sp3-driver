@@ -39,7 +39,7 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single
 ```
 
-Patch 
+Patching nvidia-container-toolkit-daemonset and nvidia-driver-daemonset
 ```
 # Issue: nvidia driver can't compile
 # SLE BCI need access to SLE repo for kernel-default and kernel-default-devel.
