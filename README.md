@@ -30,7 +30,7 @@ ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images tag "import-%{yyyy-M
 ```
 
 
-# Phase 2: Deploy gpu-operator
+# Phase 2-1: Deploy gpu-operator
 ```
 # Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
@@ -39,7 +39,7 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single
 ```
 
-Patching nvidia-container-toolkit-daemonset and nvidia-driver-daemonset
+# Phase 2-2: Patching nvidia-container-toolkit-daemonset and nvidia-driver-daemonset
 ```
 # Issue: nvidia driver can't compile
 # SLE BCI need access to SLE repo for kernel-default and kernel-default-devel.
