@@ -38,6 +38,7 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 # Single MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=single
 ```
+[To change strategy see tests](https://github.com/jear/nvidia-gpu-operator-sles15-sp3-driver/tree/main/tests#test-1-change-mig-strategy)
 
 # Phase 2-2: Patching nvidia-container-toolkit-daemonset and nvidia-driver-daemonset
 ```
