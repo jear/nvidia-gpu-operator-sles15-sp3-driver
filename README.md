@@ -55,6 +55,7 @@ helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --c
 # https://thenewstack.io/install-a-nvidia-gpu-operator-on-rke2-kubernetes-cluster/
 # Workaround : change ENV to good path and to config.toml.tmpl
 
+# Because RKE2
 # nvidia-container-toolkit-daemonset
 spec:
   template:
@@ -79,6 +80,7 @@ spec:
           type: ""
         name: containerd-socket
 
+# Becasue SLES15
 # nvidia-driver-daemonset
 spec:
   template:
