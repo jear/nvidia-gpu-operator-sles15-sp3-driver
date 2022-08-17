@@ -5,7 +5,8 @@ spec:
       - args:
         env:
         - name: RUNTIME_ARGS
-          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
+          value: "--socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl"
+        name: containerd-config
       volumes:
       - hostPath:
           path: /var/lib/rancher/rke2/agent/etc/containerd/
