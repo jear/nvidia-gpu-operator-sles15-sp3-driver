@@ -41,7 +41,7 @@ spec:
         - -c
         env:
         - name: RUNTIME_ARGS
-          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
+          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml
         - name: RUNTIME
           value: containerd
         - name: CONTAINERD_RUNTIME_CLASS
@@ -145,11 +145,11 @@ spec:
           type: ""
         name: crio-hooks
       - hostPath:
-          path: /var/lib/rancher/rke2/agent/etc/containerd/
+          path: /etc/containerd
           type: ""
         name: containerd-config
       - hostPath:
-          path: /run/k3s/containerd/
+          path: /run/containerd
           type: ""
         name: containerd-socket
   updateStrategy:

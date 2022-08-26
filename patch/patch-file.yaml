@@ -1,0 +1,16 @@
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        env:
+        - name: RUNTIME_ARGS
+          value: --socket /runtime/sock-dir/containerd.sock --config /runtime/config-dir/config.toml.tmpl
+        name: nvidia-container-toolkit-ctr
+      volumes:
+      - hostPath:
+          path: /var/lib/rancher/rke2/agent/etc/containerd/
+        name: containerd-config
+      - hostPath:
+          path: /run/k3s/containerd/
+        name: containerd-socket
