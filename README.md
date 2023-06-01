@@ -32,7 +32,7 @@ ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images tag "import-%{yyyy-M
 
 # Phase 2-1: Deploy gpu-operator
 
-[To change strategy see tests](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#install-nvidia-gpu-operator)
+[To install GPU operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#install-nvidia-gpu-operator)
 ```
 # Mixed MIG strategy
 helm upgrade --install gpu-operator  nvidia/gpu-operator  -n my-gpu-operator --create-namespace  --set mig.strategy=mixed
